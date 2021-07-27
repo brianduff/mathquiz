@@ -1,4 +1,4 @@
-mathquiz_chapter(
-    name = "place_value"
+mq_chapter(
+    name = "place_value",
     srcs = glob(["*.md"]),
 )
