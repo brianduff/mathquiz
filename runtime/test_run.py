@@ -28,7 +28,7 @@ class TestRun(unittest.TestCase):
         self.assertEqual(eval_expressions(
             "Now a is %%a%%", locals), "Now a is 5")
         self.assertEqual(eval_expressions(
-            "Cool thing - %%repeat(4, a)%%", locals), "Cool thing - 5555")
+            "Cool thing - %%repeat(4, a)%%", locals), "Cool thing - 5,555")
 
     def test_expression_with_percent(self):
         self.assertEqual(eval_expressions("%%5 % 10%%"), "5")
@@ -44,7 +44,7 @@ class TestRun(unittest.TestCase):
             "So: %%1+2%"), "So: ")
 
     def test_escaped_expression(self):
-        self.assertEqual(eval_expressions("%%$a=10**5$%%", {}), "100000")
+        self.assertEqual(eval_expressions("%%$a=10**5$%%", {}), "100,000")
 
     def test_eval_markdown(self):
         result = eval_markdown([
@@ -92,7 +92,8 @@ class TestRun(unittest.TestCase):
             "# Title",
             "## Section",
             "",
-            "(@) This is a question"
+            "(@) This is a question",
+            ""
         ])
 
     def test_eval_markdown_with_directives_escaped(self):
@@ -110,3 +111,7 @@ class TestRun(unittest.TestCase):
             "",
             "(@) This is a question with 5"
         ])
+
+
+if __name__ == "__main__":
+    unittest.main()
