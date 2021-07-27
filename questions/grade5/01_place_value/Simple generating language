@@ -1,0 +1,11 @@
+Simple generating language
+
+concat(expr, expr) - contatenate stringified expressions 
+randint(x, y)  - generate a random integer between x and y
+randint(n) - equivalent to rand_int_between(1, n)
+repeat(n, expr) - evaluate \expr\ \n\ times and 
+
+
+randpow(n, i, a) - a random power of n between i and a. e.g. randpow(10, 1, 5) could generate 10, 100, 1000, 10000, or 100000.
+
+$10 {{repeat(randint(2, 10), "\times 10")}}$

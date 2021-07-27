@@ -1,0 +1,7 @@
+Asia,17266000
+Africa,11724000
+North America,9360000
+South America,6878000
+Antarctica,5500000
+Europe,3900000
+Oceania,3286100

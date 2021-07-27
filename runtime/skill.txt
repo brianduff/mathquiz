@@ -1,0 +1,9 @@
+piano
+chess
+running
+singing
+bowling
+eating
+basketball
+soccer
+ice skating
