@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout repository
@@ -14,6 +14,6 @@ jobs:
 
       - name: Run tests
         run: |
-          sudo apt-get install pandoc
+          brew install pandoc
           bazel test --sandbox_debug //...
           bazel build --sandbox_debug questions/...
