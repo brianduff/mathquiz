@@ -6,15 +6,12 @@ def _mq_chapter_impl(ctx):
     outs = []
     for src in srcs:
         out_path = paths.replace_extension(src.basename, ".html")
-        # out_map[src] = out_file
 
         tmp_path = paths.replace_extension(src.basename, ".tmp.md")
-        # tmp_map[src] = tmp_file
 
         out_file = ctx.actions.declare_file(out_path)
         outs.append(out_file)
         tmp_file = ctx.actions.declare_file(tmp_path)
-        # outs.append(tmp_file)
 
         args = [src.path, tmp_file.path]
 
