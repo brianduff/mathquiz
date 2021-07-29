@@ -48,12 +48,3 @@ These items are on the menu: %`names[0]`% (%`currency(costs[0])`%), %`names[1]`%
 ## Practice
 
 Find two decimals that are equivalent to $\left(%`randint(2, 9)`% \times 100 \right) + \left(%`randint(2, 9)`% \times \frac{1}{10} \right) + \left( %`randint(2, 9)`% \times \frac{1}{100} \right)$
-
-$$
- \begin{tabular}{r}
-     5 \\
-     + 12 \\
-     \hline
-     17
- \end{tabular}
-$$
