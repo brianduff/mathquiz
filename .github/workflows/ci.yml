@@ -14,5 +14,6 @@ jobs:
 
       - name: Run tests
         run: |
+          sudo apt-get install pandoc
           bazel test --sandbox_debug //...
           bazel build --sandbox_debug questions/...
