@@ -31,7 +31,7 @@ def _mq_chapter_impl(ctx):
         #    args = ctx.actions.args()
         ctx.actions.run_shell(
             inputs = [tmp_file],
-            command = "pandoc --metadata title='" + paths.split_extension(src.basename)[0] + "' --from=markdown --standalone --mathjax -t html " + tmp_file.path + " -o " + out_file.path,
+            command = "pandoc --shift-heading-level-by=-1 --from=markdown --standalone --mathjax -t html " + tmp_file.path + " -o " + out_file.path,
             outputs = [out_file],
         )
 
