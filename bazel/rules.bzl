@@ -28,12 +28,29 @@ def _mq_chapter_impl(ctx):
         )
 
         # Invoke pandoc on each file.
-        #    args = ctx.actions.args()
         ctx.actions.run_shell(
             inputs = [tmp_file],
             command = "pandoc --shift-heading-level-by=-1 --from=markdown --standalone --mathjax -t html " + tmp_file.path + " -o " + out_file.path,
             outputs = [out_file],
         )
+
+    toc_md_file = ctx.actions.declare_file("toc.md")
+
+    ctx.actions.run(
+        inputs = ctx.files.srcs,
+        outputs = [toc_md_file],
+        tools = [ctx.executable.toc_generator],
+        executable = ctx.executable.toc_generator,
+        arguments = [toc_md_file.path] + [f.path for f in ctx.files.srcs],
+    )
+
+    toc_html_file = ctx.actions.declare_file("toc.html")
+    outs.append(toc_html_file)
+    ctx.actions.run_shell(
+        inputs = [toc_md_file],
+        command = "pandoc --metadata title='" + ctx.attr.title + "' --from=markdown --standalone -t html " + toc_md_file.path + " -o " + toc_html_file.path,
+        outputs = [toc_html_file],
+    )
 
     return [DefaultInfo(files = depset(outs))]
 
@@ -47,5 +64,12 @@ mq_chapter = rule(
             allow_files = True,
             default = Label("//runtime:run_generator"),
         ),
+        "toc_generator": attr.label(
+            executable = True,
+            cfg = "host",
+            allow_files = True,
+            default = Label("//toc:toc_generator"),
+        ),
+        "title": attr.string(),
     },
 )
