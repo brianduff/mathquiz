@@ -7,6 +7,7 @@ import sys
 import random
 import tempfile
 import subprocess
+import os
 from functions import *
 from enum import Enum
 
@@ -100,7 +101,6 @@ def eval_markdown(inlines):
             config_match = re.match(config_expr, directive_expression)
             if config_match:
                 directive_expression = f'config["{config_match.group(1)}"] = {config_match.group(2)}'
-                print(directive_expression)
 
             exec("from functions import *", None, section_locals)
             exec(directive_expression, None, section_locals)
@@ -162,17 +162,16 @@ def eval_markdown_file(infile, outfile):
             out.write(line + "\n")
 
 
-def invoke_pandoc(input_path, output_path):
-    subprocess.check_output(
-        ["pandoc",
-        "--from=markdown",
-        "--standalone",
-        "--mathjax",
-        "-t",
-        "html",
-        input_path,
-        output_path], universal_newlines=True)
-
+# def invoke_pandoc(input_path, output_path):
+#     subprocess.check_output(
+#         ["pandoc",
+#          "--from=markdown",
+#          "--standalone",
+#          "--mathjax",
+#          "-t",
+#          "html",
+#          input_path,
+#          output_path], universal_newlines=True)
 
 
 def main():
@@ -187,8 +186,7 @@ def main():
         exit(1)
 
     tmp_output = tempfile.TemporaryFile()
-    eval_markdown_file(args.input, tmp_output)
-    invoke_pandoc(tmp_output, args.output)
+    eval_markdown_file(args.input, args.output)
 
 
 if __name__ == "__main__":

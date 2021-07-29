@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 
 
 def concat(a, b):
@@ -14,7 +15,7 @@ def randint(x, y=None):
 
 def repeat(n, expr):
     result = ""
-    for x in range(n):
+    for _ in range(n):
         result += str(expr)
     return result
 
@@ -53,7 +54,12 @@ def weekday():
 
 
 def _random_line(file):
-    with open(file, 'r') as f:
+    f = Path("data") / file
+    if not f.exists():
+        f = Path(
+            "bazel-out/host/bin/runtime/run_generator.runfiles/mathquiz/runtime/data") / file
+
+    with open(f, 'r') as f:
         names = f.read().splitlines()
 
     return names[randint(0, len(names) - 1)]
