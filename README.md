@@ -7,3 +7,5 @@ The questions directory contains a bunch of example questions. To generate html 
 After that, you can build the html files via:
 
 `bazel build questions/...`
+
+To randomize the quizzes, you have to clean: `bazel clean` then rebuild.
