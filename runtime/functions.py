@@ -319,3 +319,21 @@ def rand_values(n, list):
         result.append(list[i])
 
     return result
+
+
+def digit():
+    return randint(1, 9)
+
+
+def uniq_decimals(count, min, max, places=2):
+    result = []
+
+    while len(result) < count:
+        whole = randint(min, max)
+        frac = n_random_digits(places)
+
+        n = float(str(whole) + "." + str(frac))
+        if not n in result:
+            result.append(n)
+
+    return result
