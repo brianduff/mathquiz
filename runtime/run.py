@@ -89,6 +89,7 @@ def eval_markdown(inlines):
 
     random_questions = []
     result = []
+    answers = []
     for line in inlines:
         directive = r"\[([a-z]+)\]: <> \(`?([^`]+)`?\)"
         directive_match = re.match(directive, line)
@@ -132,17 +133,43 @@ def eval_markdown(inlines):
                     evaluated = eval_expressions(line, section_locals)
                     if is_random:
                         random_questions.append("(@) " + evaluated)
+                        if "answer" in section_locals:
+                            answers.append(
+                                "(@) " + str(section_locals["answer"]))
+                        else:
+                            answers.append("(@) No answer given")
+
                     else:
                         result.append("(@) " + evaluated)
+                        if "answer" in section_locals:
+                            answers.append(
+                                "(@)" + str(section_locals["answer"]))
+                        else:
+                            answers.append("(@) No answer given")
+
+                    if "answer" in section_locals:
+                        del section_locals["answer"]
 
                 question_directive_expressions = []
 
     if random_questions:
-        random.shuffle(random_questions)
-        result.extend(random_questions)
-        result.append("")
+        # Zip the questions and answers together before shufflin
+        merged = [(random_questions[i], answers[i])
+                  for i in range(0, len(random_questions))]
 
-    return result
+        random.shuffle(merged)
+
+        # Unzip 'em again
+        answers = [x[1] for x in merged]
+        random_questions = [x[0] for x in merged]
+
+        spaces = [""] * len(random_questions)
+        random_questions = [val for pair in zip(
+            random_questions, spaces) for val in pair]
+
+        result.extend(random_questions)
+
+    return [result, answers]
 
 
 def _exec_all(expressions, local):
@@ -151,27 +178,19 @@ def _exec_all(expressions, local):
         exec(expression, None, local)
 
 
-def eval_markdown_file(infile, outfile):
+def eval_markdown_file(infile, outfile, answersfile):
     with open(infile, 'r') as f:
         lines = f.read().splitlines()
 
-    outlines = eval_markdown(lines)
+    [outlines, answers] = eval_markdown(lines)
 
     with open(outfile, 'w') as out:
         for line in outlines:
             out.write(line + "\n")
 
-
-# def invoke_pandoc(input_path, output_path):
-#     subprocess.check_output(
-#         ["pandoc",
-#          "--from=markdown",
-#          "--standalone",
-#          "--mathjax",
-#          "-t",
-#          "html",
-#          input_path,
-#          output_path], universal_newlines=True)
+    with open(answersfile, 'w') as out:
+        for line in answers:
+            out.write(line + "\n")
 
 
 def main():
@@ -179,14 +198,14 @@ def main():
         description='Generates markdown question sets.')
     parser.add_argument('input', type=pathlib.Path)
     parser.add_argument('output', type=pathlib.Path)
+    parser.add_argument('answers', type=pathlib.Path)
     args = parser.parse_args()
 
     if not args.input.exists():
         print(f"Error: File doesn't exist: {args.input}", file=sys.stderr)
         exit(1)
 
-    tmp_output = tempfile.TemporaryFile()
-    eval_markdown_file(args.input, args.output)
+    eval_markdown_file(args.input, args.output, args.answers)
 
 
 if __name__ == "__main__":

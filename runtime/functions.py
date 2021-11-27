@@ -1,5 +1,7 @@
 import random
 from pathlib import Path
+from fractions import Fraction
+from math import floor
 
 
 def concat(a, b):
@@ -11,6 +13,17 @@ def randint(x, y=None):
         y = x
         x = 1
     return random.randint(x, y)
+
+
+def randint_even(x, y=None):
+    return randint_multiple(2, x, y)
+
+
+def randint_multiple(m, x, y=None):
+    r = randint(x, y)
+    while r % m != 0:
+        r = randint(x, y)
+    return r
 
 
 def repeat(n, expr):
@@ -337,3 +350,76 @@ def uniq_decimals(count, min, max, places=2):
             result.append(n)
 
     return result
+
+
+def unique_sequence(min, max):
+    result = []
+
+    for i in range(min, max+1):
+        result.append(i)
+
+    random.shuffle(result)
+
+    return result
+
+
+def random_proper_fraction():
+    denominator = randint(2, 10)
+    numerator = randint(1, denominator - 1)
+
+    return [numerator, denominator]
+
+
+def random_fraction():
+    denominator = randint(2, 10)
+    numerator = randint(1, denominator - 1)
+
+    return Fraction(numerator, denominator)
+
+
+def fraction(numerator, denominator):
+    return Fraction(numerator, denominator)
+
+
+def mul(a, b):
+    return a * b
+
+
+def render_fraction(fraction):
+    if fraction.denominator == 1:
+        return str(fraction.numerator)
+
+    if fraction.numerator > fraction.denominator:
+        whole_part = fraction.numerator // fraction.denominator
+        fraction = Fraction(
+            fraction.numerator - (whole_part * fraction.denominator), fraction.denominator)
+        return str(whole_part) + " " + render_fraction(fraction)
+
+    return "$\\frac{" + str(fraction.numerator) + "}{" + str(fraction.denominator) + "}$"
+
+
+class Parts:
+    def __init__(self, denominator=None):
+        self.second_of_remaining = Fraction(1, 10000)
+        self.iters = 0
+        while self.second_of_remaining.denominator > 12:
+            self.denominator = denominator or randint(50, 500)
+            self.first_part = randint(1, (3 * self.denominator) // 4)
+            self.second_part = self.denominator - randint(
+                self.first_part + 1, self.denominator - 1)
+            self.second_of_remaining = (
+                Fraction(1, 1) - self.first()) * self.second()
+            self.iters += 1
+
+    def first(self):
+        return fraction(self.first_part, self.denominator)
+
+    def second(self):
+        return fraction(self.second_part, self.denominator)
+
+    def third(self):
+        return fraction(self.denominator - self.first_part - self.second_part, self.denominator)
+
+
+def parts(denominator=None):
+    return Parts(denominator)

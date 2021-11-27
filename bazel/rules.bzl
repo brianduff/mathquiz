@@ -6,18 +6,27 @@ def _mq_chapter_impl(ctx):
     outs = []
     for src in srcs:
         out_path = paths.replace_extension(src.basename, ".html")
+        out_answers_path = paths.replace_extension(src.basename, ".answers.html")
 
         tmp_path = paths.replace_extension(src.basename, ".tmp.md")
 
+        answers_md_path = paths.replace_extension(src.basename, "tmp.answers.md")
+
         out_file = ctx.actions.declare_file(out_path)
         outs.append(out_file)
+
+        out_answers_file = ctx.actions.declare_file(out_answers_path)
+        outs.append(out_answers_file)
+
         tmp_file = ctx.actions.declare_file(tmp_path)
 
-        args = [src.path, tmp_file.path]
+        answers_file = ctx.actions.declare_file(answers_md_path)
+
+        args = [src.path, tmp_file.path, answers_file.path]
 
         ctx.actions.run(
             inputs = [src],
-            outputs = [tmp_file],
+            outputs = [tmp_file, answers_file],
             tools = [ctx.executable.run_generator],
             progress_message = "Generating executed markdown %s" % tmp_file.short_path,
             executable = ctx.executable.run_generator,
@@ -29,6 +38,12 @@ def _mq_chapter_impl(ctx):
             inputs = [tmp_file],
             command = "pandoc --shift-heading-level-by=-1 --from=markdown --standalone --mathjax -t html " + tmp_file.path + " -o " + out_file.path,
             outputs = [out_file],
+        )
+
+        ctx.actions.run_shell(
+            inputs = [answers_file],
+            command = "pandoc --shift-heading-level-by=-1 --from=markdown --standalone --mathjax -t html " + answers_file.path + " -o " + out_answers_file.path,
+            outputs = [out_answers_file],
         )
 
     toc_md_file = ctx.actions.declare_file("toc.md")
