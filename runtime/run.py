@@ -143,7 +143,7 @@ def eval_markdown(inlines):
                         result.append("(@) " + evaluated)
                         if "answer" in section_locals:
                             answers.append(
-                                "(@)" + str(section_locals["answer"]))
+                                "(@) " + str(section_locals["answer"]))
                         else:
                             answers.append("(@) No answer given")
 
