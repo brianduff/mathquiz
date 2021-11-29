@@ -47,10 +47,10 @@ $%%randpow(10, 6)%% \times %%randint(9)%%$
 [section]: <> (config.randomorder = True)
 [section]: <> (c=randint(2, 9))
 [section]: <> (p=randint(3, 7))
-[section]: <> (`answer=c * (10**p)`)
+[section]: <> (`a=c * (10**p)`)
 
-[ ] $%%answer%% = %%c%% \times %%10**(p-1)%%$
-[ ] $%%answer%% = %%c%% \times %%10**p%%$
-[ ] $%%answer%% = %%c%% \times 10^%%p-1%%$
-[ ] $%%answer%% = %%c%% \times 10^%%p%%$
-[ ] $%%answer%% = %%c%% \times 10^%%p+1%%$
+[ ] $%%a%% = %%c%% \times %%10**(p-1)%%$
+[ ] $%%a%% = %%c%% \times %%10**p%%$
+[ ] $%%a%% = %%c%% \times 10^%%p-1%%$
+[ ] $%%a%% = %%c%% \times 10^%%p%%$
+[ ] $%%a%% = %%c%% \times 10^%%p+1%%$
