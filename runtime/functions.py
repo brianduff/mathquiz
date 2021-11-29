@@ -398,6 +398,13 @@ def render_fraction(fraction):
     return "$\\frac{" + str(fraction.numerator) + "}{" + str(fraction.denominator) + "}$"
 
 
+def whole_part_fraction(fraction):
+    if fraction.numerator > fraction.denominator:
+        return fraction.numerator // fraction.denominator
+
+    return 0
+
+
 class Parts:
     def __init__(self, denominator=None):
         self.second_of_remaining = Fraction(1, 10000)

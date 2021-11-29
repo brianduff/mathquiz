@@ -1,24 +1,6 @@
-# Fraction Problems
+# Section 8 Quiz
 
-## Solve problems
-
-[section]: <> (config.randomorder = True)
-
-[question]: <> (frac1 = random_fraction())
-[question]: <> (frac2 = random_fraction())
-[question]: <> (frac3 = random_fraction())
-
-%`name_male()`% spent %`render_fraction(frac1)`% of an hour cleaning the table and %`render_fraction(frac2)`% of an hour mopping the floor. After he finished the housework, he spent %`render_fraction(frac3)`% of an hour farting. What is the difference between the time he spent farting and doing housework?
-
-[question]: <> (initial_count = randint_multiple(8, 50, 200))
-[question]: <> (morning_count = randint_multiple(8, 5, initial_count // 2))
-[question]: <> (afternoon_count = randint_multiple(8, initial_count - morning_count - 1))
-[question]: <> (afternoon_remaining = initial_count - morning_count)
-[question]: <> (afternoon_fraction = fraction(afternoon_count, afternoon_remaining))
-[question]: <> (end_remaining_fraction = fraction(initial_count - morning_count - afternoon_count, initial_count))
-[question]: <> (answer = str(initial_count) + " candies")
-
-%`name_female()`%'s candy store sold %`morning_count`% chocolates one morning. $\frac{%`afternoon_fraction.numerator`%}{%`afternoon_fraction.denominator`%}$ of the remaining chocolates were sold that afternoon. The amount of candy left was now $\frac{%`end_remaining_fraction.numerator`%}{%`end_remaining_fraction.denominator`%}$ of the number the store had a the beginning of the day. How many chocolates did the store have at the beginning of the day?
+## Solve these problems
 
 [question]: <> (p = parts())
 [question]: <> (pages = randint_multiple(p.denominator, 1, 1000))
@@ -95,60 +77,3 @@ A square foot of wall space can be covered by %`render_fraction(paint_per_sqft)`
 [question]: <> (answer = f"{total_days} days")
 
 %`name_female()`% spends %`render_fraction(p.first())`% of her vacation at summer camp. She spends %`render_fraction(p.second_of_remaining)`% of the remaining time at her grandparent's home. She spends the remaining %`holiday_days`% days at home avoiding friends she doesn't like very much. How many days of summer vacation does she get each summer?
-
-[question]: <> (cloth = random_fraction())
-[question]: <> (length = randint(1, 8))
-[question]: <> (answer = str(floor(float(length / cloth))) + " Spiderman masks at most")
-
-%`name_male()`% needs %`render_fraction(cloth)`% meter of cloth to make a Spiderman mask. What is the most number of Spiderman masks that he can make with %`length`% meters of cloth? (Why is he making so many Spiderman masks anyway????)
-
-[question]: <> (d = randint(2, 10))
-[question]: <> (water = fraction(1, d))
-[question]: <> (buckets = randint(2, 5))
-[question]: <> (answer = str(mul(d, buckets)) + " potted plants")
-
-%`name_male()`% uses %`render_fraction(water)`% of the water in a full bucket to water 1 potted plant. How many potted plants can he water with %`buckets`% of these buckets of water?
-
-[question]: <> (d = randint(2, 5))
-[question]: <> (len = randint(3, 10))
-[question]: <> (answer = "she wiped her bottom with " + str(mul(d, len)) + " short pieces")
-
-%`name_female()`% has a %`len`% inch roll of toilet paper. Her bottom is crazy dirty, so she cuts it into shorter pieces that are %`render_fraction(fraction(1, d))`% inches long, then she wipes her bottom with each of them in turn. How many shorter pieces did she wipe her bottom with?
-
-[question]: <> (size = random_fraction())
-[question]: <> (plots = randint(2, 8))
-[question]: <> (requested = plots - randint(1, plots - 1))
-[question]: <> (answer = render_fraction(mul(requested, size / plots)) + " square km")
-
-%`name_male()`% buys a preposterously gigantic strawberry cake with an area of %`render_fraction(size)`% square kilometers. After discovering that he really can't eat it all himself, he decides to divide it equally into %`plots`% smaller (but still quite ridiculously large) parts. He gives %`requested`% of the parts to his zany friends. What is the total area of the %`requested`% parts?.
-
-[question]: <> (weight = random_fraction())
-[question]: <> (fractions = randint(3, 10))
-[question]: <> (multiplier = randint(2, fractions-1))
-[question]: <> (answer = render_fraction(mul(multiplier, (weight / fractions))) + " pounds")
-
-%`name_male()`% buys %`render_fraction(weight)`% pound of festering rancid rat meat. He gets out a huge axe and divides the meat into %`fractions`% equal portions to share among his starving alien children. What is the weight of %`multiplier`% portions?
-
-[question]: <> (quarts = random_fraction())
-[question]: <> (mugs = randint(3, 10))
-[question]: <> (multiplier = randint(2, mugs-1))
-[question]: <> (answer = render_fraction(mul(multiplier, (quarts / mugs))) + " quarts of 口水")
-
-%`name_male()`% pours %`render_fraction(quarts)`% quarts of spicy saliva from a pitcher equally into %`mugs`% golden goblets for his guests to drink. Find the amount of 口水 in %`multiplier`% goblets.
-
-[question]: <> (hours = randint(1, 3) + random_fraction())
-[question]: <> (pay = randint(3, 10))
-[question]: <> (answer = "$" + render_fraction(mul(5, mul(hours, pay))))
-
-%`a=name_female()`% works %`render_fraction(hours)`% hours a day as a collector of tiny hamster poops in football field sized hamster sports arena. She is paid the measly sum of $%`pay`% per hour. She works 5 days a week. How much does %`a`% earn in a week?
-
-[question]: <> (hours = randint(1, 3) + random_fraction())
-[question]: <> (answer = render_fraction(mul(hours, 2)) + "hours")
-
-%`name_male()`% practices brushing his eyebrows for %`render_fraction(hours)`% hours each every Saturday and Sunday. How long does he brush his eyebrows for over the two days? Express your answer in hours and minutes.
-
-[question]: <> (dollars = randint(3, 10))
-[question]: <> (pounds = randint(2, 10) + random_fraction())
-[question]: <> (answer = "$" + str(whole_part_fraction(mul(dollars, pounds)) + 1))
-
-At the alien market, one pound of human teeth costs $%`dollars`%. %`name_male()`% buys %`render_fraction(pounds)`% pounds of human teeth. How many whole dollars does he need to pay for the teeth?
